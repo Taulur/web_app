@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма поиска</title>
+    <link rel="stylesheet" href="styles3.css">
+    <style>
+        #results {
+            margin-top: 20px; /* Отступ сверху для результатов */
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <label for="search">Введите параметр поиска:</label>
+        <input type="text" id="search" name="search">
+        <button type="button" onclick="performSearch()">Поиск</button>
+    </div>
+    <div id="results"></div> <!-- Этот блок теперь под кнопкой -->
+
+    <script>
+        function performSearch() {
+            var searchQuery = document.getElementById('search').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'search.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('results').innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send('search=' + encodeURIComponent(searchQuery));
+        }
+    </script>
+</body>
+</html>
